@@ -27,3 +27,12 @@
 - [x] Add a visible LastDayNight logout action for the signed-in application session.
 - [x] Add a confirmed GitHub disconnect action that removes encrypted GitHub credentials and stops future synchronization without deleting existing analytics by default.
 - [x] Push the latest verified account-identity, logout, and GitHub disconnect updates to https://github.com/sunveda/lastday.
+- [x] Make the deployment architecture TypeScript-first and remove the Python subprocess dependency from the core ingestion path.
+- [x] Evaluate migration from the current MySQL/TiDB database to PostgreSQL for independent hosting.
+- [x] Define Vercel or Cloudflare deployment adapters and an external scheduled-sync strategy.
+- [x] Switch the production GitHub ingestion path fully from Python to TypeScript.
+- [x] Audit repository documentation and remove stale Python references or obsolete Python artifacts in a new pull-request branch.
+- [x] Rename the displayed project name from LastDayNight to LastDay in the new pull request.
+- [x] Protect the GitHub main branch so direct pushes are blocked and changes must be merged through pull requests.
+- [x] Fix naming regressions introduced by the LastDay branding update and re-run the complete verification suite.
+- [x] Clarify in documentation that the product is LastDay while the currently registered GitHub App remains LastDayNight until renamed in GitHub Developer Settings.

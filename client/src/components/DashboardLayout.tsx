@@ -65,7 +65,7 @@ export default function DashboardLayout({
               Sign in to continue
             </h1>
               <p className="max-w-sm text-center text-sm text-slate-400">
-                Sign in to open your private LastDayNight workspace.
+                Sign in to open your private LastDay workspace.
             </p>
           </div>
           <Button
@@ -169,7 +169,7 @@ function DashboardLayoutContent({
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="font-semibold tracking-tight text-white truncate">
-                    LastDayNight
+                    LastDay
                   </span>
                 </div>
               ) : null}

@@ -60,7 +60,7 @@ export const lastdayRouter = router({
         name: `github-sync-${account.id}`,
         cron: "0 0 */12 * * *",
         path: "/api/scheduled/github-sync",
-        description: `LastDayNight twelve-hour contribution sync for GitHub account ${account.id}`,
+        description: `LastDay twelve-hour contribution sync for GitHub account ${account.id}`,
       }, sessionToken);
       await setGithubScheduleTaskUid(ctx.user.id, account.id, job.taskUid);
       return { scheduled: true, taskUid: job.taskUid, nextExecutionAt: job.nextExecutionAt ?? null };

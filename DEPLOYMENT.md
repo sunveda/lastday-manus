@@ -1,6 +1,6 @@
-# LastDayNight Release Guide
+# LastDay Release Guide
 
-LastDayNight is deployed at `https://lastdayapp-ur7gpuvm.manus.space`. The project uses a Node application server with Python 3 installed in the production image so that bounded GitHub synchronization batches can invoke the Python contribution-ingestion module. The production process remains a single web server; it does not rely on in-container timers.
+LastDay is deployed at `https://lastdayapp-ur7gpuvm.manus.space`. The project uses a Node 22 application server with TypeScript-based GitHub synchronization. The production process remains a single web server; it does not rely on in-container timers.
 
 ## 1. Publish the project
 
@@ -16,7 +16,7 @@ In the GitHub App settings, use the following production values:
 
 | Field | Value |
 | --- | --- |
-| App name | `LastDayNight` |
+| App name | Current registration: `LastDayNight`. Rename it to `LastDay` in GitHub Developer Settings when ready so the consent screen matches the product. |
 | Homepage URL | `https://lastdayapp-ur7gpuvm.manus.space` |
 | User authorization callback URL | `https://lastdayapp-ur7gpuvm.manus.space/api/github/callback` |
 | Install scope | Any account |
@@ -26,7 +26,7 @@ The required server-only secret names are `GITHUB_APP_ID`, `GITHUB_APP_CLIENT_ID
 
 ## 4. Verify the first connection
 
-Sign into LastDayNight, select **Connect GitHub**, then complete GitHub’s authorization and app installation process. Choose **Only select repositories** and approve only repositories that should be part of your private workspace. Once returned to the dashboard, select **Start first import**. The app imports a 12-month contribution calendar and selected repository metadata without publishing any repository detail.
+Sign into LastDay, select **Connect GitHub**, then complete GitHub’s authorization and app installation process. Choose **Only select repositories** and approve only repositories that should be part of your private workspace. Once returned to the dashboard, select **Start first import**. The app imports a 12-month contribution calendar and selected repository metadata without publishing any repository detail.
 
 ## 5. Enable background refresh
 
@@ -34,4 +34,4 @@ After deployment, choose the scheduled-refresh control once it is exposed in the
 
 ## 6. Push the code to the existing repository
 
-The target repository is `https://github.com/sunveda/lastday`. The repository is public, so review the project before pushing and confirm that no secrets, `.pem` files, sync outputs, or local `.env` files are included. The project’s Dockerfile, Python module, database migrations, and application code are safe to commit; credentials are injected only through the deployment secret configuration.
+The target repository is `https://github.com/sunveda/lastday`. The repository is public, so review the project before pushing and confirm that no secrets, `.pem` files, sync outputs, or local `.env` files are included. The TypeScript ingestion module, database migrations, and application code are safe to commit; credentials are injected only through the deployment secret configuration. The default Node deployment image is sufficient because the production runtime has no extra system dependency.
