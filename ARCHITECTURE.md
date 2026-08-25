@@ -1,6 +1,6 @@
-# LastDayNight Architecture Notes
+# LastDay Architecture Notes
 
-LastDayNight uses the supplied React, Express, tRPC, and MySQL/TiDB scaffold for the authenticated web experience and durable user-scoped data. The GitHub contribution ingestion layer is implemented in TypeScript and calls the GitHub GraphQL API directly with the server-side encrypted credential. It is not a separately persistent service: scheduled execution uses an authenticated HTTP scheduling facility, and each batch must finish within the request window.
+LastDay uses the supplied React, Express, tRPC, and MySQL/TiDB scaffold for the authenticated web experience and durable user-scoped data. The GitHub contribution ingestion layer is implemented in TypeScript and calls the GitHub GraphQL API directly with the server-side encrypted credential. It is not a separately persistent service: scheduled execution uses an authenticated HTTP scheduling facility, and each batch must finish within the request window.
 
 The production runtime is Node.js 22 with TypeScript compiled into the server bundle. No secondary runtime or subprocess is required. The ingestion module validates the GraphQL response, normalizes contribution-calendar days and repository metadata, persists only the application’s private records, and never logs access tokens.
 

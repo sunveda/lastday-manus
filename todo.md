@@ -32,3 +32,7 @@
 - [x] Define Vercel or Cloudflare deployment adapters and an external scheduled-sync strategy.
 - [x] Switch the production GitHub ingestion path fully from Python to TypeScript.
 - [x] Audit repository documentation and remove stale Python references or obsolete Python artifacts in a new pull-request branch.
+- [x] Rename the displayed project name from LastDayNight to LastDay in the new pull request.
+- [x] Protect the GitHub main branch so direct pushes are blocked and changes must be merged through pull requests.
+- [x] Fix naming regressions introduced by the LastDay branding update and re-run the complete verification suite.
+- [x] Clarify in documentation that the product is LastDay while the currently registered GitHub App remains LastDayNight until renamed in GitHub Developer Settings.

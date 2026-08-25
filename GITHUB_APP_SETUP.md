@@ -1,17 +1,17 @@
-# LastDayNight GitHub App Registration
+# LastDay GitHub App Registration
 
-Create a **GitHub App**, not an OAuth App, from **GitHub Settings → Developer settings → GitHub Apps → New GitHub App**. Lastday uses a read-only GitHub App because repository access can be selected at installation time and GitHub credentials are handled only by the server.
+Create a **GitHub App**, not an OAuth App, from **GitHub Settings → Developer settings → GitHub Apps → New GitHub App**. LastDay uses a read-only GitHub App because repository access can be selected at installation time and GitHub credentials are handled only by the server.
 
 ## Basic information
 
-| GitHub field | Value for Lastday |
+| GitHub field | Value for LastDay |
 | --- | --- |
-| GitHub App name | `LastDayNight` |
+| GitHub App name | Current registration: `LastDayNight`. Rename it to `LastDay` in GitHub Developer Settings when ready so the consent screen matches the product. |
 | Description | `Private GitHub contribution analytics and owner-controlled developer portfolio.` |
 | Homepage URL | `https://lastdayapp-ur7gpuvm.manus.space` |
 | User authorization callback URL | `https://lastdayapp-ur7gpuvm.manus.space/api/github/callback` |
 | Setup URL | Leave blank for the first release. |
-| Webhook | Uncheck **Active**. Lastday v1 uses scheduled, rate-limit-aware synchronization rather than push webhooks. |
+| Webhook | Uncheck **Active**. LastDay v1 uses scheduled, rate-limit-aware synchronization rather than push webhooks. |
 
 Choose **Any account** so other developers can independently connect their own GitHub accounts. Each person still must authorize the app, choose their own repositories, and can revoke access at any time.
 
@@ -19,10 +19,10 @@ Choose **Any account** so other developers can independently connect their own G
 
 Configure the following repository permissions as **Read-only**. Leave every unlisted permission at **No access**.
 
-| Permission | Level | Why Lastday needs it |
+| Permission | Level | Why LastDay needs it |
 | --- | --- | --- |
 | Metadata | Read-only | Identify available repositories, their visibility, language, and current state. This is normally provided automatically. |
-| Contents | Read-only | Retrieve commit metadata for selected repositories. Lastday does not edit files or branches. |
+| Contents | Read-only | Retrieve commit metadata for selected repositories. LastDay does not edit files or branches. |
 | Pull requests | Read-only | Count and analyze pull requests and review-related contribution activity. |
 | Issues | Read-only | Count and analyze issue activity where the account owner chooses to include it. |
 
@@ -35,7 +35,7 @@ GitHub will show the app settings page. Complete these steps before installing i
 1. Copy the numeric **App ID** and the **Client ID**.
 2. Select **Generate a new client secret**, copy it once, and store it only in the project’s secure secret configuration.
 3. Select **Generate a private key** to download the `.pem` file. Preserve the file securely. Its entire text, including the `BEGIN` and `END` lines, is required as a secure server secret.
-4. Install the app on your `sunveda` account. Select **Only select repositories** and choose the private repositories you want Lastday to analyze. You can change this selection later from GitHub.
+4. Install the app on your `sunveda` account. Select **Only select repositories** and choose the private repositories you want LastDay to analyze. You can change this selection later from GitHub.
 
 The project needs these values as secrets, never in source code or the public repository:
 

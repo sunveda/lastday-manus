@@ -1,6 +1,6 @@
-# LastDayNight
+# LastDay
 
-LastDayNight is a mobile-first private GitHub contribution workspace with an owner-controlled portfolio layer. It is designed for people who want to understand their selected GitHub activity without automatically exposing private repository details.
+LastDay is a mobile-first private GitHub contribution workspace with an owner-controlled portfolio layer. It is designed for people who want to understand their selected GitHub activity without automatically exposing private repository details.
 
 ## Product boundaries
 
