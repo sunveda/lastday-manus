@@ -7,6 +7,7 @@ describe("GitHub App credentials", () => {
   it("authenticates the configured App ID and PEM private key with GitHub", async () => {
     const config = getGithubAppConfig();
     expect(config.isConfigured, `Missing GitHub configuration: ${config.missing.join(", ")}`).toBe(true);
+    expect(config.callbackUrl).toBe("https://lastdayapp-ur7gpuvm.manus.space/api/github/callback");
     if (!config.privateKey?.includes("PRIVATE KEY")) {
       throw new Error("GitHub private key is missing a valid PEM header");
     }

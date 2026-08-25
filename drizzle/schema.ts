@@ -31,7 +31,7 @@ export const githubAccounts = mysqlTable(
     githubUserId: varchar("githubUserId", { length: 64 }).notNull(),
     login: varchar("login", { length: 255 }).notNull(),
     avatarUrl: text("avatarUrl"),
-    accessTokenCiphertext: text("accessTokenCiphertext").notNull(),
+    accessTokenCiphertext: text("accessTokenCiphertext"),
     refreshTokenCiphertext: text("refreshTokenCiphertext"),
     tokenExpiresAt: timestamp("tokenExpiresAt"),
     syncStatus: mysqlEnum("syncStatus", ["idle", "queued", "syncing", "error", "needs_reauth"])
@@ -41,6 +41,7 @@ export const githubAccounts = mysqlTable(
     lastSyncedAt: timestamp("lastSyncedAt"),
     lastSyncError: text("lastSyncError"),
     scheduleCronTaskUid: varchar("scheduleCronTaskUid", { length: 65 }),
+    disconnectedAt: timestamp("disconnectedAt"),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   },

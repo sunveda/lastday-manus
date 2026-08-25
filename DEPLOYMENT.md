@@ -1,14 +1,14 @@
 # LastDayNight Release Guide
 
-LastDayNight is prepared for a deployment at `https://git.sunveda.tech`. The project uses a Node application server with Python 3 installed in the production image so that bounded GitHub synchronization batches can invoke the Python contribution-ingestion module. The production process remains a single web server; it does not rely on in-container timers.
+LastDayNight is deployed at `https://lastdayapp-ur7gpuvm.manus.space`. The project uses a Node application server with Python 3 installed in the production image so that bounded GitHub synchronization batches can invoke the Python contribution-ingestion module. The production process remains a single web server; it does not rely on in-container timers.
 
 ## 1. Publish the project
 
 Create a project checkpoint, then use the **Publish** button in the project interface. Do not publish until the GitHub App private key has been rotated if a previous key was exposed during setup. The deployment must be live before its recurring synchronization job is enabled.
 
-## 2. Connect the custom domain
+## 2. Optional: connect a custom domain later
 
-In the project’s **Settings → Domains** panel, add `git.sunveda.tech`. Because `sunveda.tech` is managed by Cloudflare, use the domain panel’s displayed DNS target to create or update the `git` record in the Cloudflare zone. Keep proxying and HTTPS enabled as directed by the domain panel, then wait for domain verification to complete.
+The deployed platform URL can be used directly. If you later want `git.sunveda.tech`, add it in the project’s **Settings → Domains** panel first, then use the displayed DNS target to create or update the `git` record in Cloudflare. Keep proxying and HTTPS enabled as directed by the domain panel, then wait for domain verification to complete.
 
 ## 3. Confirm GitHub App configuration
 
@@ -17,8 +17,8 @@ In the GitHub App settings, use the following production values:
 | Field | Value |
 | --- | --- |
 | App name | `LastDayNight` |
-| Homepage URL | `https://git.sunveda.tech` |
-| User authorization callback URL | `https://git.sunveda.tech/api/github/callback` |
+| Homepage URL | `https://lastdayapp-ur7gpuvm.manus.space` |
+| User authorization callback URL | `https://lastdayapp-ur7gpuvm.manus.space/api/github/callback` |
 | Install scope | Any account |
 | Webhooks | Off for the first release |
 

@@ -17,4 +17,13 @@
 - [x] Replace the starter home page with the mobile-first LastDayNight landing and connection experience.
 - [x] Complete LastDayNight naming across visible product UI, metadata, and setup documentation.
 - [x] Import selected repository metadata during contribution sync and display protected repository trends plus the contribution calendar in the dashboard.
-- [ ] Push the verified LastDayNight codebase to https://github.com/sunveda/lastday after confirming the repository contains no credentials.
+- [x] Push the verified LastDayNight codebase to https://github.com/sunveda/lastday after confirming the repository contains no credentials.
+- [x] Defer the optional git.sunveda.tech custom domain and retain the built-in hosting address for this release.
+- [x] Use https://lastdayapp-ur7gpuvm.manus.space as the LastDayNight production URL and update the GitHub App homepage and callback settings accordingly.
+- [x] Resolve the GitHub OAuth redirect_uri mismatch for the live built-in LastDayNight deployment and verify account connection can start.
+- [x] Show the currently connected GitHub username and avatar in the LastDayNight dashboard.
+- [x] Add a visible LastDayNight logout action for the signed-in application session.
+- [x] Add a confirmed GitHub disconnect action that removes encrypted GitHub credentials and stops future synchronization without deleting existing analytics by default.
+- [x] Add a visible LastDayNight logout action for the signed-in application session.
+- [x] Add a confirmed GitHub disconnect action that removes encrypted GitHub credentials and stops future synchronization without deleting existing analytics by default.
+- [ ] Push the latest verified account-identity, logout, and GitHub disconnect updates to https://github.com/sunveda/lastday.

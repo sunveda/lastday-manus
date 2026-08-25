@@ -1,9 +1,13 @@
 import DashboardLayout from "@/components/DashboardLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
-import { ArrowUpRight, CalendarDays, CheckCircle2, Github, LockKeyhole, RefreshCw, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowUpRight, CalendarDays, CheckCircle2, Github, Link2Off, LockKeyhole, LogOut, RefreshCw, ShieldCheck, Sparkles } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const metricCards = [
@@ -18,6 +22,8 @@ function statusLabel(status: string) {
 }
 
 export default function Dashboard() {
+  const { logout } = useAuth();
+  const [disconnectOpen, setDisconnectOpen] = useState(false);
   const overview = trpc.lastday.overview.useQuery();
   const connect = trpc.lastday.github.authorize.useMutation({
     onSuccess: result => {
@@ -40,6 +46,20 @@ export default function Dashboard() {
     onSuccess: result => toast.success("Scheduled refresh enabled", { description: result.nextExecutionAt ? `Next batch: ${new Date(result.nextExecutionAt).toLocaleString()}` : "LastDayNight will refresh every 12 hours." }),
     onError: () => toast.error("Scheduled refresh is available after the published deployment is live."),
   });
+  const disconnect = trpc.lastday.github.disconnect.useMutation({
+    onSuccess: result => {
+      setDisconnectOpen(false);
+      if (result.disconnected) toast.success("GitHub disconnected", { description: "Saved GitHub credentials were removed and future syncs have stopped." });
+      else toast.info("No active GitHub connection was found.");
+      overview.refetch();
+    },
+    onError: () => toast.error("Could not disconnect GitHub. Please try again."),
+  });
+
+  const signOut = async () => {
+    await logout();
+    window.location.assign("/");
+  };
 
   const data = overview.data;
   const isConnected = data?.connection.connected;
@@ -78,17 +98,7 @@ export default function Dashboard() {
                 LastDayNight turns the contribution history you choose to connect into a private, readable record of your momentum.
               </p>
             </div>
-            {isConnected ? (
-              <div className="rounded-2xl border border-emerald-300/15 bg-emerald-300/10 px-4 py-3 text-sm text-emerald-100 backdrop-blur">
-                <div className="flex items-center gap-2 font-medium"><ShieldCheck className="h-4 w-4" /> GitHub connected</div>
-                <p className="mt-1 text-xs text-emerald-100/70">Only selected repositories are available to LastDayNight.</p>
-              </div>
-            ) : (
-              <Button onClick={() => connect.mutate()} disabled={connect.isPending} className="h-11 rounded-xl bg-amber-300 px-5 font-semibold text-slate-950 hover:bg-amber-200">
-                <Github className="mr-2 h-4 w-4" />
-                {connect.isPending ? "Opening GitHub…" : "Connect GitHub"}
-              </Button>
-            )}
+            {isConnected ? <div className="flex flex-wrap items-center gap-2"><div className="rounded-2xl border border-emerald-300/15 bg-emerald-300/10 px-4 py-3 text-sm text-emerald-100 backdrop-blur"><div className="flex items-center gap-2 font-medium"><ShieldCheck className="h-4 w-4" /> GitHub connected</div><p className="mt-1 text-xs text-emerald-100/70">Only selected repositories are available to LastDayNight.</p></div><Button onClick={signOut} variant="outline" className="h-10 rounded-xl border-slate-600 bg-transparent text-slate-200 hover:bg-slate-800"><LogOut className="mr-2 h-4 w-4" />Sign out</Button></div> : <div className="flex flex-wrap gap-2"><Button onClick={() => connect.mutate()} disabled={connect.isPending} className="h-11 rounded-xl bg-amber-300 px-5 font-semibold text-slate-950 hover:bg-amber-200"><Github className="mr-2 h-4 w-4" />{connect.isPending ? "Opening GitHub…" : "Connect GitHub"}</Button><Button onClick={signOut} variant="outline" className="h-11 rounded-xl border-slate-600 bg-transparent text-slate-200 hover:bg-slate-800"><LogOut className="mr-2 h-4 w-4" />Sign out</Button></div>}
           </div>
         </section>
 
@@ -104,6 +114,10 @@ export default function Dashboard() {
                   <p className="mt-1 text-xs text-slate-500">{note}</p>
                 </article>
               ))}
+            </section>
+            <section className="flex flex-col gap-4 rounded-2xl border border-slate-800/70 bg-[#12172a] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+              <div className="flex items-center gap-4"><Avatar className="h-12 w-12 border border-slate-700"><AvatarImage src={data?.connection.avatarUrl ?? undefined} alt={data?.connection.login ?? "Connected GitHub account"} /><AvatarFallback className="bg-slate-800 text-sm font-semibold text-amber-200">{data?.connection.login?.slice(0, 2).toUpperCase() ?? "GH"}</AvatarFallback></Avatar><div><p className="text-xs font-medium tracking-[0.14em] text-slate-500 uppercase">Connected GitHub account</p><p className="mt-1 font-semibold text-white">@{data?.connection.login}</p><p className="mt-1 text-xs text-slate-500">Read-only access · credentials encrypted at rest</p></div></div>
+              <Button onClick={() => setDisconnectOpen(true)} variant="outline" className="rounded-xl border-rose-400/30 bg-transparent text-rose-200 hover:bg-rose-400/10 hover:text-rose-100"><Link2Off className="mr-2 h-4 w-4" />Disconnect GitHub</Button>
             </section>
             <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
               <article className="rounded-2xl border border-slate-800/70 bg-[#12172a] p-5 sm:p-6">
@@ -146,6 +160,7 @@ export default function Dashboard() {
             <div className="border-t border-slate-800 bg-slate-900/40 p-6 sm:p-10 lg:border-t-0 lg:border-l"><div className="space-y-5">{[["01", "You choose repositories", "Install the read-only GitHub App on only selected repositories."], ["02", "We map activity", "A compact first import builds your private contribution record."], ["03", "You decide what is public", "Portfolio highlights begin as private drafts with sanitized copy."]].map(([number, title, body]) => <div className="flex gap-4" key={number}><span className="text-sm font-semibold text-amber-300">{number}</span><div><h3 className="text-sm font-medium text-slate-200">{title}</h3><p className="mt-1 text-xs leading-5 text-slate-500">{body}</p></div></div>)}</div></div>
           </section>
         )}
+        <AlertDialog open={disconnectOpen} onOpenChange={setDisconnectOpen}><AlertDialogContent className="border-slate-700 bg-[#151a30] text-slate-100"><AlertDialogHeader><AlertDialogTitle>Disconnect @{data?.connection.login}?</AlertDialogTitle><AlertDialogDescription className="text-slate-400">LastDayNight will remove the encrypted GitHub access and refresh tokens from this account and stop future synchronization. Your existing private analytics and portfolio drafts remain private and are not deleted.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel className="border-slate-700 bg-transparent text-slate-200 hover:bg-slate-800 hover:text-white">Cancel</AlertDialogCancel><AlertDialogAction onClick={() => disconnect.mutate()} disabled={disconnect.isPending} className="bg-rose-500 text-white hover:bg-rose-400">{disconnect.isPending ? "Disconnecting…" : "Disconnect GitHub"}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
       </div>
     </DashboardLayout>
   );

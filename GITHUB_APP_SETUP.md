@@ -8,8 +8,8 @@ Create a **GitHub App**, not an OAuth App, from **GitHub Settings → Developer 
 | --- | --- |
 | GitHub App name | `LastDayNight` |
 | Description | `Private GitHub contribution analytics and owner-controlled developer portfolio.` |
-| Homepage URL | `https://git.sunveda.tech` |
-| User authorization callback URL | `https://git.sunveda.tech/api/github/callback` |
+| Homepage URL | `https://lastdayapp-ur7gpuvm.manus.space` |
+| User authorization callback URL | `https://lastdayapp-ur7gpuvm.manus.space/api/github/callback` |
 | Setup URL | Leave blank for the first release. |
 | Webhook | Uncheck **Active**. Lastday v1 uses scheduled, rate-limit-aware synchronization rather than push webhooks. |
 
@@ -45,6 +45,6 @@ The project needs these values as secrets, never in source code or the public re
 | `GITHUB_APP_CLIENT_ID` | Client ID |
 | `GITHUB_APP_CLIENT_SECRET` | Generated client secret |
 | `GITHUB_APP_PRIVATE_KEY` | Full downloaded `.pem` private key text |
-| `GITHUB_APP_CALLBACK_URL` | `https://git.sunveda.tech/api/github/callback` |
+| `GITHUB_APP_CALLBACK_URL` | `https://lastdayapp-ur7gpuvm.manus.space/api/github/callback` |
 
 > Never commit the client secret or `.pem` private key to `sunveda/lastday`, paste it into an issue, or share it in a public screenshot. Add each value only through the project’s secure secrets screen. If a secret or private key is ever exposed, revoke it immediately in GitHub and generate a replacement.
