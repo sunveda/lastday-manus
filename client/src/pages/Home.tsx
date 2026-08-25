@@ -19,7 +19,7 @@ export default function Home() {
       <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-amber-300 text-sm text-slate-950">L</span>
-          LastDayNight
+          LastDay
         </Link>
         {loading ? null : user ? (
           <Link href="/dashboard"><Button className="rounded-xl bg-white text-slate-950 hover:bg-slate-100">Open dashboard</Button></Link>

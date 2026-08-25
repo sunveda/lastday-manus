@@ -13,7 +13,7 @@ import {
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import type { PortfolioProjectionInput } from "./portfolio";
-import type { PythonContributionSummary } from "./github/pythonRunner";
+import type { GithubContributionSummary } from "./github/ingestion";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -310,7 +310,7 @@ export async function startGithubSync(account: GithubAccount) {
   return { runId: result[0].insertId };
 }
 
-export async function persistContributionCalendar(account: GithubAccount, runId: number, summary: PythonContributionSummary) {
+export async function persistContributionCalendar(account: GithubAccount, runId: number, summary: GithubContributionSummary) {
   const db = await getDb();
   if (!db) throw new Error("Database is unavailable");
   for (const day of summary.days) {

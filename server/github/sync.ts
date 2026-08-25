@@ -1,5 +1,5 @@
 import { decryptGithubCredential } from "./crypto";
-import { summarizeContributionBatch } from "./pythonRunner";
+import { summarizeContributionBatch } from "./ingestion";
 import {
   failGithubSync,
   getGithubAccountForSync,

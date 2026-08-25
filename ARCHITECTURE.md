@@ -1,9 +1,9 @@
-# Lastday Architecture Notes
+# LastDay Architecture Notes
 
-The existing `sunveda/lastday` GitHub repository is public and currently empty. The application will therefore be created from the initialized full-stack project and later pushed to that repository after owner confirmation.
+LastDay uses the supplied React, Express, tRPC, and MySQL/TiDB scaffold for the authenticated web experience and durable user-scoped data. The GitHub contribution ingestion layer is implemented in TypeScript and calls the GitHub GraphQL API directly with the server-side encrypted credential. It is not a separately persistent service: scheduled execution uses an authenticated HTTP scheduling facility, and each batch must finish within the request window.
 
-Lastday uses the supplied React, Express, tRPC, and MySQL/TiDB scaffold for the authenticated web experience and durable user-scoped data. A compact Python ingestion and analytics module runs from the server process for each requested or scheduled synchronization batch. It is not a separately persistent service: scheduled execution must use the platform-supported HTTP scheduling facility and every batch must finish within the request window.
+The production runtime is Node.js 22 with TypeScript compiled into the server bundle. No secondary runtime or subprocess is required. The ingestion module validates the GraphQL response, normalizes contribution-calendar days and repository metadata, persists only the application’s private records, and never logs access tokens.
 
-Production needs Python available to the Node server process. The deployment will therefore use a root Dockerfile based on the Node image with Python 3 installed. The application server remains responsible for serving the built client and listening on the deployment-provided port.
+The current built-in deployment remains the reference environment for this release. The same Node/TypeScript application can later be adapted for independent hosting because its core ingestion path uses only standard Node.js capabilities. The database connection and scheduled HTTP callback remain configurable through environment variables and deployment-specific adapters.
 
-The custom domain target is `git.sunveda.tech`. The GitHub App authorization callback should eventually use `https://git.sunveda.tech/api/github/callback`; the real route and GitHub App values will be added only after the deployment is publicly available and the relevant secrets have been configured.
+The current built-in production URL is `https://lastdayapp-ur7gpuvm.manus.space`. A custom domain such as `git.sunveda.tech` can be added later through the hosting provider’s domain configuration and then used for the GitHub App homepage and callback URL.
