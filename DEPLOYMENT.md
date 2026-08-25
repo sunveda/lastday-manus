@@ -34,4 +34,4 @@ After deployment, choose the scheduled-refresh control once it is exposed in the
 
 ## 6. Push the code to the existing repository
 
-The target repository is `https://github.com/sunveda/lastday`. The repository is public, so review the project before pushing and confirm that no secrets, `.pem` files, sync outputs, or local `.env` files are included. The Dockerfile, TypeScript ingestion module, database migrations, and application code are safe to commit; credentials are injected only through the deployment secret configuration.
+The target repository is `https://github.com/sunveda/lastday`. The repository is public, so review the project before pushing and confirm that no secrets, `.pem` files, sync outputs, or local `.env` files are included. The TypeScript ingestion module, database migrations, and application code are safe to commit; credentials are injected only through the deployment secret configuration. The default Node deployment image is sufficient because the production runtime has no extra system dependency.

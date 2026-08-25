@@ -26,4 +26,4 @@ pnpm check
 pnpm build
 ```
 
-See [GITHUB_APP_SETUP.md](./GITHUB_APP_SETUP.md) for GitHub App registration and [DEPLOYMENT.md](./DEPLOYMENT.md) for production setup at `git.sunveda.tech`.
+See [GITHUB_APP_SETUP.md](./GITHUB_APP_SETUP.md) for GitHub App registration and [DEPLOYMENT.md](./DEPLOYMENT.md) for production setup at `lastdayapp-ur7gpuvm.manus.space`.

@@ -31,3 +31,4 @@
 - [x] Evaluate migration from the current MySQL/TiDB database to PostgreSQL for independent hosting.
 - [x] Define Vercel or Cloudflare deployment adapters and an external scheduled-sync strategy.
 - [x] Switch the production GitHub ingestion path fully from Python to TypeScript.
+- [x] Audit repository documentation and remove stale Python references or obsolete Python artifacts in a new pull-request branch.
