@@ -111,12 +111,13 @@ const emptyOverview = {
 
 export async function getGithubConnectionStatus(userId: number) {
   const db = await getDb();
-  if (!db) return { connected: false, login: null, syncStatus: "idle" as const, lastSyncedAt: null as Date | null };
+  if (!db) return { connected: false, login: null, avatarUrl: null, syncStatus: "idle" as const, lastSyncedAt: null as Date | null };
   const account = (await db.select().from(githubAccounts).where(eq(githubAccounts.userId, userId)).limit(1))[0];
-  if (!account) return { connected: false, login: null, syncStatus: "idle" as const, lastSyncedAt: null as Date | null };
+  if (!account) return { connected: false, login: null, avatarUrl: null, syncStatus: "idle" as const, lastSyncedAt: null as Date | null };
   return {
-    connected: true,
-    login: account.login,
+    connected: Boolean(account.accessTokenCiphertext) && !account.disconnectedAt,
+    login: account.accessTokenCiphertext && !account.disconnectedAt ? account.login : null,
+    avatarUrl: account.accessTokenCiphertext && !account.disconnectedAt ? account.avatarUrl : null,
     syncStatus: account.syncStatus,
     lastSyncedAt: account.lastSyncedAt,
   };
@@ -243,8 +244,30 @@ export async function upsertGithubAccount(input: {
       tokenExpiresAt: input.tokenExpiresAt,
       syncStatus: "queued",
       lastSyncError: null,
+      disconnectedAt: null,
     },
   });
+}
+
+/**
+ * Removes local GitHub credentials and detaches the scheduled job while
+ * preserving the account's historical, owner-private analytics records.
+ */
+export async function disconnectGithubAccount(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is unavailable");
+  const result = await db.update(githubAccounts)
+    .set({
+      accessTokenCiphertext: null,
+      refreshTokenCiphertext: null,
+      tokenExpiresAt: null,
+      syncStatus: "needs_reauth",
+      scheduleCronTaskUid: null,
+      lastSyncError: null,
+      disconnectedAt: new Date(),
+    })
+    .where(and(eq(githubAccounts.userId, userId), sql`${githubAccounts.accessTokenCiphertext} is not null`));
+  return { disconnected: result[0].affectedRows > 0 };
 }
 
 export async function getGithubAccountForSync(githubAccountId: number) {

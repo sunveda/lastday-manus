@@ -5,6 +5,7 @@ import {
   createPortfolioItem,
   getGithubConnectionStatus,
   getLastdayOverview,
+  disconnectGithubAccount,
   getPublicPortfolioItem,
   listPortfolioItems,
   publishPortfolioItem,
@@ -47,12 +48,12 @@ export const lastdayRouter = router({
     }),
     syncNow: protectedProcedure.mutation(async ({ ctx }) => {
       const account = await getPrimaryGithubAccount(ctx.user.id);
-      if (!account) throw new Error("Connect GitHub before starting an import");
+      if (!account?.accessTokenCiphertext || account.disconnectedAt) throw new Error("Connect GitHub before starting an import");
       return runGithubContributionSync(account.id);
     }),
     enableScheduledSync: protectedProcedure.mutation(async ({ ctx }) => {
       const account = await getPrimaryGithubAccount(ctx.user.id);
-      if (!account) throw new Error("Connect GitHub before scheduling synchronization");
+      if (!account?.accessTokenCiphertext || account.disconnectedAt) throw new Error("Connect GitHub before scheduling synchronization");
       if (account.scheduleCronTaskUid) return { scheduled: true, taskUid: account.scheduleCronTaskUid };
       const sessionToken = parseCookie(ctx.req.headers.cookie ?? "")[COOKIE_NAME] ?? "";
       const job = await createHeartbeatJob({
@@ -64,6 +65,7 @@ export const lastdayRouter = router({
       await setGithubScheduleTaskUid(ctx.user.id, account.id, job.taskUid);
       return { scheduled: true, taskUid: job.taskUid, nextExecutionAt: job.nextExecutionAt ?? null };
     }),
+    disconnect: protectedProcedure.mutation(({ ctx }) => disconnectGithubAccount(ctx.user.id)),
   }),
   portfolio: router({
     list: protectedProcedure.query(({ ctx }) => listPortfolioItems(ctx.user.id)),

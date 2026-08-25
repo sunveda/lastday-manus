@@ -18,6 +18,9 @@ function toGithubDate(date: Date) {
 export async function runGithubContributionSync(githubAccountId: number) {
   const account = await getGithubAccountForSync(githubAccountId);
   if (!account) throw new Error("GitHub account is not available for synchronization");
+  if (!account.accessTokenCiphertext || account.disconnectedAt) {
+    throw new Error("GitHub account is disconnected; reconnect it before synchronizing");
+  }
   if (account.syncStatus === "syncing") return { skipped: "already-syncing" as const };
 
   const started = await startGithubSync(account);

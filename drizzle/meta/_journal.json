@@ -22,6 +22,13 @@
       "when": 1787635829482,
       "tag": "0002_short_namorita",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1787645086407,
+      "tag": "0003_early_jean_grey",
+      "breakpoints": true
     }
   ]
 }
