@@ -17,3 +17,4 @@
 - [x] Replace the starter home page with the mobile-first LastDayNight landing and connection experience.
 - [x] Complete LastDayNight naming across visible product UI, metadata, and setup documentation.
 - [x] Import selected repository metadata during contribution sync and display protected repository trends plus the contribution calendar in the dashboard.
+- [ ] Push the verified LastDayNight codebase to https://github.com/sunveda/lastday after confirming the repository contains no credentials.
