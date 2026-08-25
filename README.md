@@ -13,8 +13,8 @@ The dashboard uses a read-only GitHub App authorization flow. Users select repos
 | User interface | React, TypeScript, Tailwind CSS |
 | Application API | Express and tRPC |
 | Private data | MySQL/TiDB with Drizzle ORM |
-| GitHub ingestion | Python 3 subprocess, GitHub GraphQL API |
-| Deployment runtime | Node 22 with Python 3 in the Docker image |
+| GitHub ingestion | TypeScript `fetch`, GitHub GraphQL API |
+| Deployment runtime | Node 22 TypeScript server |
 | Scheduled work | Platform-managed authenticated HTTP callback |
 
 ## Local commands

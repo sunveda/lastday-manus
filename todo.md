@@ -27,3 +27,7 @@
 - [x] Add a visible LastDayNight logout action for the signed-in application session.
 - [x] Add a confirmed GitHub disconnect action that removes encrypted GitHub credentials and stops future synchronization without deleting existing analytics by default.
 - [x] Push the latest verified account-identity, logout, and GitHub disconnect updates to https://github.com/sunveda/lastday.
+- [x] Make the deployment architecture TypeScript-first and remove the Python subprocess dependency from the core ingestion path.
+- [ ] Evaluate migration from the current MySQL/TiDB database to PostgreSQL for independent hosting.
+- [ ] Define Vercel or Cloudflare deployment adapters and an external scheduled-sync strategy.
+- [x] Switch the production GitHub ingestion path fully from Python to TypeScript.

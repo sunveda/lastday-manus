@@ -1,6 +1,6 @@
 # LastDayNight Release Guide
 
-LastDayNight is deployed at `https://lastdayapp-ur7gpuvm.manus.space`. The project uses a Node application server with Python 3 installed in the production image so that bounded GitHub synchronization batches can invoke the Python contribution-ingestion module. The production process remains a single web server; it does not rely on in-container timers.
+LastDayNight is deployed at `https://lastdayapp-ur7gpuvm.manus.space`. The project uses a Node 22 application server with TypeScript-based GitHub synchronization. The production process remains a single web server; it does not rely on in-container timers.
 
 ## 1. Publish the project
 
@@ -34,4 +34,4 @@ After deployment, choose the scheduled-refresh control once it is exposed in the
 
 ## 6. Push the code to the existing repository
 
-The target repository is `https://github.com/sunveda/lastday`. The repository is public, so review the project before pushing and confirm that no secrets, `.pem` files, sync outputs, or local `.env` files are included. The project’s Dockerfile, Python module, database migrations, and application code are safe to commit; credentials are injected only through the deployment secret configuration.
+The target repository is `https://github.com/sunveda/lastday`. The repository is public, so review the project before pushing and confirm that no secrets, `.pem` files, sync outputs, or local `.env` files are included. The Dockerfile, TypeScript ingestion module, database migrations, and application code are safe to commit; credentials are injected only through the deployment secret configuration.
