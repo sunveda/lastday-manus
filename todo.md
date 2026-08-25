@@ -26,4 +26,4 @@
 - [x] Add a confirmed GitHub disconnect action that removes encrypted GitHub credentials and stops future synchronization without deleting existing analytics by default.
 - [x] Add a visible LastDayNight logout action for the signed-in application session.
 - [x] Add a confirmed GitHub disconnect action that removes encrypted GitHub credentials and stops future synchronization without deleting existing analytics by default.
-- [ ] Push the latest verified account-identity, logout, and GitHub disconnect updates to https://github.com/sunveda/lastday.
+- [x] Push the latest verified account-identity, logout, and GitHub disconnect updates to https://github.com/sunveda/lastday.
